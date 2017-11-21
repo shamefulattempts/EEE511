@@ -2,21 +2,26 @@ import gym
 from QLearnAgent import QAgent
 
 env = gym.make('CartPole-v0')
+print(list(zip(env.observation_space.low, env.observation_space.high)))
 agent = QAgent()
 highscore = 0
-for i_episode in range(2000): # run 20 episodes
+best_trial = 0
+for trial in range(2000): # run 20 episodes
     observation = env.reset()
-    points = 0 # keep track of the reward each episode
+    time=0
     while True: # run until episode is done
         env.render()
-        action = agent.choose_action(observation)
+        action = agent.choose_action(observation,trial)
         old_obs = observation
         observation, reward, done, info = env.step(action)
-        agent.update_q(old_obs,observation,reward,action)
-        points += reward
+        agent.update_q(old_obs,observation,reward,action,trial)
+        time += 1
         #print(observation)
         if done:
-            print("Episode %d finished with score of %f" % (i_episode, points))
-            if points > highscore: # record high score
-                highscore = points
+            print("Trial %d lasted %d time steps Learning Rate: %f Explore Rate: %f" % (trial, time, agent.learn, agent.explore))
+            if (time > highscore):
+            	highscore = time
+            	best_trial = trial
             break
+
+print("Best time %d time steps at trial %d" % (highscore, best_trial))

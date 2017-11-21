@@ -1,7 +1,7 @@
 import gym
 from QLearnAgent import QAgent
 
-env = gym.make('CartPole-v0')
+env = gym.make('CartPole-v1')
 print(list(zip(env.observation_space.low, env.observation_space.high)))
 agent = QAgent()
 highscore = 0

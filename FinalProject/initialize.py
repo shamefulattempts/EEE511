@@ -1,5 +1,6 @@
 import gym
 from QLearnAgent import QAgent
+from time import sleep
 
 env = gym.make('CartPole-v1')
 print(list(zip(env.observation_space.low, env.observation_space.high)))
@@ -10,6 +11,7 @@ for trial in range(2000): # run 20 episodes
     observation = env.reset()
     time=0
     while True: # run until episode is done
+        #sleep(1)
         env.render()
         action = agent.choose_action(observation,trial)
         old_obs = observation

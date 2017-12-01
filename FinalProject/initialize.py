@@ -12,7 +12,7 @@ for trial in range(2000): # run 20 episodes
     time=0
     while True: # run until episode is done
         #sleep(1)
-        env.render()
+        #env.render()
         action = agent.choose_action(observation,trial)
         old_obs = observation
         observation, reward, done, info = env.step(action)

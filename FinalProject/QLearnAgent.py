@@ -8,7 +8,7 @@ class QAgent(object):
     """
 
     def __init__(self):
-        self.STATE_BINS = (1, 1, 10, 3) # (x, x', theta, theta')
+        self.STATE_BINS = (2, 2, 10, 3) # (x, x', theta, theta')
         self.ACTION_SPACE = 2
         self.STATE_BOUNDS = numpy.zeros((4,2))
         self.STATE_BOUNDS[0] = (-4.8, 4.8)

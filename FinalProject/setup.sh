@@ -20,3 +20,4 @@ conda create --name tf-gym --clone tensorflow
 . activate tf-gym
 sudo apt-get install -y zlib1g-dev libboost-all-dev swig cmake libsdl2-dev
 pip install 'gym[all]'
+pip install keras

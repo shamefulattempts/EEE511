@@ -16,11 +16,14 @@ for trial in range(2000): # run 20 episodes
         action = agent.choose_action(observation,trial)
         old_obs = observation
         observation, reward, done, info = env.step(action)
+        # Update Q values at each time step
         agent.update_q(old_obs,observation,reward,action,trial)
         time += 1
         #print(observation)
         if done:
             print("Trial %d lasted %d time steps Learning Rate: %f Explore Rate: %f" % (trial, time, agent.learn, agent.explore))
+            # Update Q values after every trial
+            #agent.update_q(old_obs,observation,reward,action,trial)
             if (time > highscore):
             	highscore = time
             	best_trial = trial

@@ -7,24 +7,29 @@ env = gym.make('CartPole-v1')
 #highscore = 0
 #best_trial = 0
 num_runs = 5
-summation = 0
-highscore_avg=[]
 sensor_noise=[0, 0.05*random.uniform(-0.5,0.5), 0.1*random.uniform(-0.5,0.5), random.gauss(0,.1), random.gauss(0,.2)]
+text_file=open("output.txt","w+")
 for i in range(len(sensor_noise)):
     if i == 0:
         print("No noise")
+        text_file.write("No noise")
     elif i == 1:
         print("5 pct uniform sensor noise")
+        text_file.write("5 pct uniform sensor noise")
     elif i == 2:
         print("10 pct uniform sensor noise")
+        text_file.write("10 pct uniform sensor noise")
     elif i == 3:
         print("0.1 var gaussian sensor noise")
+        text_file.write("0.1 var gaussian sensor noise")
     elif i == 4:
         print("0.2 var gaussian sensor noise")
+        text_file.write("0.2 var gaussian sensor noise")
     else:
         print("ERROR")
     wins = 0
     pct = 0
+    summation = 0
     for run in range (num_runs):
         agent = QAgent()
         highscore = 0
@@ -56,10 +61,11 @@ for i in range(len(sensor_noise)):
             if highscore >= 5999:
                 break
         print("Best time %d time steps at trial %d" % (highscore, best_trial))
+        text_file.write("Best time %d time steps at trial %d" % (highscore, best_trial))
         if highscore >= 5999:
             summation += best_trial
             wins += 1
     avg=summation/wins
     pct=wins/num_runs
     print("Average success in %f trials with a win percentage of %f" % (avg, pct))
-    #highscore_avg=list.append(avg)
+    text_file.write("Average success in %f trials with a win percentage of %f" % (avg, pct))

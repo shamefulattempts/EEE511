@@ -56,5 +56,5 @@ class QAgent(object):
         d_new_state = self.__discretize_state(new_state)
         self.learn=max(self.MIN_LEARNING_RATE, min(0.75, 1.0 - math.log10((trial+1)/100)))
         max_q = numpy.amax(self.q_table[d_new_state])
-        self.q_table[d_old_state +(action,)] += self.learn*(reward + self.DISCOUNT_FACTOR*max_q - self.q_table[d_old_state + (action,)])
+        self.q_table[d_old_state +(action,)] += self.learn*(reward - abs(new_state[0])/4.8 - abs(new_state[2])/.42 + self.DISCOUNT_FACTOR*max_q - self.q_table[d_old_state + (action,)])
 

@@ -8,12 +8,12 @@ class QAgent(object):
     """
 
     def __init__(self):
-        self.STATE_BINS = (6, 4, 10, 4) # (x, x', theta, theta')
+        self.STATE_BINS = (6, 2, 10, 3) # (x, x', theta, theta')
         self.ACTION_SPACE = 2
         self.STATE_BOUNDS = numpy.zeros((4,2))
-        self.STATE_BOUNDS[0] = (-2.4, 2.4)
-        self.STATE_BOUNDS[1] = (-1.0, 1.0)
-        self.STATE_BOUNDS[2] = (-0.21, 0.21)
+        self.STATE_BOUNDS[0] = (-4.8, 4.8)
+        self.STATE_BOUNDS[1] = (-0.5, 0.5)
+        self.STATE_BOUNDS[2] = (-0.42, 0.42)
         self.STATE_BOUNDS[3] = (-math.radians(50), math.radians(50))
         self.DISCOUNT_FACTOR = 0.99
         self.learn = 1
@@ -23,7 +23,6 @@ class QAgent(object):
         self.MIN_LEARNING_RATE = 0.03
         
         self.q_table=numpy.zeros(self.STATE_BINS + (self.ACTION_SPACE,))
-        #random.seed(seed)
 
     def choose_action(self, state, trial):
         d_state = self.__discretize_state(state)

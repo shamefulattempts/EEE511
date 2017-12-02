@@ -18,8 +18,8 @@ class QAgent(object):
         self.MIN_EXPLORE_RATE = 0.01
         self.MIN_LEARNING_RATE = 0.1
         self.model = Sequential()
-        self.model.add(Dense(12, input_dim=5, activation='relu'))
-        self.model.add(Dense(8, activation='relu'))
+        self.model.add(Dense(16, input_dim=5, activation='relu'))
+        self.model.add(Dense(12, activation='relu'))
         self.model.add(Dense(1, activation='linear'))
         self.model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
         self.targets=numpy.zeros(1).reshape(1,1)

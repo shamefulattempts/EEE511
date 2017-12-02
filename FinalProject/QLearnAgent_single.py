@@ -22,10 +22,8 @@ class QAgent(object):
         self.model.add(Dense(12, activation='relu'))
         self.model.add(Dense(1, activation='linear'))
         self.model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-        self.weightInit = self.model.get_weights()
         self.targets=numpy.zeros(1).reshape(1,1)
         self.states=numpy.zeros((1,5)).reshape(1,5)
-        self.hasRun = False
 
     def choose_action(self, state, trial):
         self.explore=max(self.MIN_EXPLORE_RATE, min(1, 1.0 - math.log10((trial+1)/25)))
@@ -48,18 +46,7 @@ class QAgent(object):
         oldQ = self.model.predict(numpy.append(old_state,[action]).reshape(1,5))
         qTarget = (1 - self.learn)*oldQ + self.learn*(reward + self.DISCOUNT_FACTOR*max(q0,q1))
         
-        # Use all data to train NN
-        if trial == 0 and self.hasRun == False:
-            print("PING1")
-            self.targets=numpy.array([qTarget]).reshape(1,1)
-            self.states=numpy.append(old_state,[action]).reshape(1,5)
-            self.hasRun = True
-        else:
-            self.targets=numpy.append(self.targets, numpy.array([qTarget]).reshape(1,1), axis=0)
-            self.states=numpy.append(self.states, numpy.append(old_state,[action]).reshape(1,5), axis=0)
-            
         # Use only last data point to train NN
-        #self.targets=numpy.array([qTarget]).reshape(1,1)
-        #self.states=numpy.append(old_state,[action]).reshape(1,5)
-        self.model.set_weights(self.weightInit)
-        self.model.fit(self.states,self.targets,epochs=100,batch_size=1, verbose=0)
+        self.targets=numpy.array([qTarget]).reshape(1,1)
+        self.states=numpy.append(old_state,[action]).reshape(1,5)
+        self.model.fit(self.states,self.targets,epochs=1,batch_size=1, verbose=0)
